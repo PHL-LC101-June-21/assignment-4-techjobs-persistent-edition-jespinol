@@ -18,9 +18,9 @@ public class EmployerController {
     @Autowired
     private EmployerRepository employerRepository;
 
-    //check this
-    @GetMapping("employers")
+    @GetMapping("")
     public String index(Model model){
+        model.addAttribute("title", "Employers");
         model.addAttribute("employers", employerRepository.findAll());
         return "employers/index";
     }
@@ -36,11 +36,11 @@ public class EmployerController {
                                     Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-//            model.addAttribute("title", "Add Employer");
             return "employers/add";
+        } else {
+            employerRepository.save(newEmployer);
+            return "redirect:";
         }
-        employerRepository.save(newEmployer);
-        return "redirect:";
     }
 
     @GetMapping("view/{employerId}")
